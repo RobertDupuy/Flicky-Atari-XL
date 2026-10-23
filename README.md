@@ -14,6 +14,8 @@ Bonus rounds now reproduce the arcade ROM's twenty independent birds, alternatin
 
 The 512 KB cartridge keeps all 48 layouts and all sound commands, and adds prepared static room messages and bonus/results screens. Padded ink/mask columns share vertical animation phases; fixed lookup tables select the prepared addresses.
 
+Round Clear now has original artwork drawn for a dedicated **160-color-pixel-wide display**, with **320-dot lettering**, seven character sets, DLI shading and player/missile color details. It no longer enlarges the gameplay sprite. PAL and NTSC have separate portrait blues. The static screen suspends actor rendering while input, the result timer and POKEY audio continue; the next round restores the gameplay display. See [ROUND_CLEAR.md](ROUND_CLEAR.md) and the [PAL emulator capture](Flicky-Round-Clear-PAL.png).
+
 The current cartridge also fixes the stray horizontal dashes caused by a font switch landing one scanline late at the HUD/playfield boundary. The first font address is now prepared during vertical blank. Real Atari800 raster checks verify all seven font-band boundaries in both NTSC and PAL; see `evidence/raster-before.json` and `evidence/raster-after.json`.
 
 ## Performance and compromises
@@ -26,7 +28,7 @@ Flicky retains blue, white and gold. Cats are bright orange hardware sprites. Ch
 
 ## Rebuild the playable cartridge
 
-Requires Python 3.12+, NumPy, and cc65 (`ca65`, `ld65`). The converted artwork, maps, sound events and generated data needed for the build are included. Original executable game ROMs are not needed for this path and are not included.
+Requires Python 3.12+, NumPy, Pillow, and cc65 (`ca65`, `ld65`). The converted artwork, maps, sound events and generated data needed for the build are included. Original executable game ROMs are not needed for this path and are not included.
 
 Download and extract [Flicky-Prepared-Game-Source.zip](Flicky-Prepared-Game-Source.zip), then run these commands inside its `Flicky-Prepared-Game` directory.
 

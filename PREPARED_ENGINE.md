@@ -13,6 +13,7 @@ The runtime has fixed actor limits and fixed glyph destinations. ROM supplies al
 | Screen writes | Row-specific store programs with wrapping addresses resolved | Write prepared character codes and remember overwritten background cells |
 | Sound | 19 exact POKEY event streams, 11,986 bytes | Read a duration and at most eight changed register values |
 | Arcade bonus | Original trajectory data, full-height masked bird stamps, nine apparatus backgrounds, source-resolution contact silhouettes and result patches | Advance all twenty birds on the arcade clock; resolve visible collision owners and latched contacts; render the net and changed background |
+| Round Clear | Original portrait paths, seven character sets, wide screen map, four player and four missile masks, immediate DLI programs | Static DMA; row color/font changes; timer and audio continue without actor rendering |
 | Follower trail | Fixed-size history and prefix-sum representation | Record the live player path; calculate distances when the flock consumes them |
 
 The player path cannot be fully pre-recorded because the player controls it. The 60-ish Hz physics and input clock remain live. Expensive image shifting, scaling, pixel priority, dynamic glyph allocation, general prop integration are absent from the normal moving-actor path. The original general compositor remains for cold floor-object preparation and the low-load bonus net.
