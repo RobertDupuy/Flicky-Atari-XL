@@ -8,7 +8,15 @@ Twenty chicks enter in five groups of four, alternating sides. The cats bounce o
 
 The net catches descending birds. Original sprite silhouettes decide contact at the arcade's horizontal resolution, independently of the Atari picture. Later sprite slots hide earlier birds where their pixels overlap. Hardware collision bits remain latched until the original scan clears them; the first pending collision ends that tick's scan even if the selected bird is ascending or already gone. The new native implementation reproduces these rules, including right-edge clipping.
 
-Catches are tallied across the playfield. At the end, each catch earns 250 points. Catching all twenty adds 10,000 points, making a perfect round worth 15,000. The original lettering and result layout are converted into prepared glyph patches. The two seesaws, their mirrored animation, the bouncing cats and the net use converted arcade artwork.
+Catches are tallied across the playfield. At the end, each catch earns 250 points. Catching all twenty adds 10,000 points, making a perfect round worth 15,000. The two seesaws, their mirrored animation, the bouncing cats and the net retain the arcade artwork and animation sequence.
+
+## Atari lettering and color
+
+The heading, score calculation and perfect-bonus award use hand-drawn **5×7 native color-pixel letters**, with a real one-pixel gap between letters. A letter can cross hardware character boundaries; it is not an eight-pixel arcade glyph squeezed into four color pixels. The twenty tally icons are drawn separately. All font and text patches are prepared in ROM and copied at transitions, with no per-frame text rasterization.
+
+Bonus-only display-list interrupts distinguish red seesaw beams, orange cats and a green-and-gold brick floor. The original floor joints are recovered from the graphics data. Cat eye pixels stay white and pale fur stays orange. Four color boundaries at playfield lines 176, 192, 208 and 216 provide the lower-screen palette and shading; white and chick gold remain constant. Each VBI restores the upper playfield palette before the shared buffer-flip, input and audio code runs.
+
+The 512-byte bonus raster program runs in `$1000–$11FF`, outside both SIC! cartridge windows. Font switches retain their WSYNC deadline. The ordinary NMI vector and display-list flags are restored on the next normal round. The original flight, net movement, collision ownership, catch rules and score calculation are unchanged.
 
 | Original address | Purpose | Native implementation |
 |---|---|---|
@@ -26,7 +34,9 @@ Catches are tallied across the playfield. At the end, each catch earns 250 point
 
 `tools/check_bonus_collision.py` independently renders the original sprite descriptors through the System 1 reference renderer and executes the original net routine. It checks **608 individual contacts**, **1,824 ascending/stationary rejections**, and **1,680 crowded or latched-collision cases**, including screen edges. These checks report zero mismatches. A second golden fixture preserves the crowded cases for ROM-free tests.
 
-`tests/test_arcade_bonus.py` also checks the converted bird pixels over patterned backgrounds, hardware-player uploads, net attachment, every score from zero through twenty catches, all original result layouts, and rendering of every bonus pattern without glyph overflow or front-buffer damage. The complete PAL and NTSC test reports accompany the source package.
+`tests/test_arcade_bonus.py` also checks the converted bird pixels over patterned backgrounds, hardware-player uploads, net attachment, every score from zero through twenty catches, native lettering and tally pixels in both buffers, and rendering of every bonus pattern without glyph overflow or front-buffer damage. Bonus VBI interruption is injected at 189 positions in an upper-ROM glyph copy, followed by a check that the next round restores the ordinary raster. The complete PAL and NTSC test reports accompany the source package.
+
+`tools/bonus_presentation_probe.py` selects all nine apparatus states and the perfect result in Atari800, then checks real GTIA palette boundaries with ANTIC/PMG DMA active. These selected-state screenshots are display diagnostics. They are separate from the continuous ordinary-input bonus preview.
 
 The real-time emulator checks select round 3 before recording, then use ordinary keyboard input with read-only observation. No state is edited and the emulator is not paused during the recording. These are diagnostic bonus previews, not evidence of reaching the bonus through ordinary level progression. Their timing reports include render faults and input-queue overflow.
 
