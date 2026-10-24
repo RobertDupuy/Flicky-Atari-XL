@@ -2,14 +2,22 @@
 
 The 512 KB PAL and NTSC cartridges replace the static title with the original
 arcade motorcycle, balloons, airplane, bombs and FLICKY letter unscrambling
-sequence. Research used the original uncoined MAME attract sequence; the Atari
+sequence. The approved native redraw uses a 12-by-20-pixel motorcycle/rider
+and a 17-by-21-pixel airplane/pilot, matching the arcade's relative screen
+scale. The motorcycle, jumping Flicky and chicks remain separate animated
+actors following the original positions. Research used the original uncoined MAME attract sequence; the Atari
 runs prepared native data and handwritten 6502 code, with no arcade emulator.
 
 The adaptation uses 160 by 224 color pixels, seven ANTIC character sets,
 separate display buffers, scenery palette changes and four hardware players
-multiplexed every eight scanlines. It contains 315 sampled poses. Decoding
+multiplexed every eight scanlines. Five DLI sky shades run from dark blue at
+the top to light blue above the forest; the mountains are blue. Raster code
+writes only changing registers, and empty bands prepare player positions
+before they become visible. The display and player DMA share the same
+16-scanline origin, placing the entire 224-line intro inside the NTSC viewport.
+It contains 315 sampled poses. Decoding
 holds each completed picture until the next one is ready; playback is slower
-than the arcade (about 30 seconds PAL and 35 seconds NTSC). The supplied video
+than the arcade (about 28 seconds PAL and 32 seconds NTSC). The supplied video
 is an unretimed recording of the actual cartridge. Fire can start the game
 while the animation plays or after the settled logo.
 
@@ -33,7 +41,8 @@ build/native/scenery-wall-glyphs.bin. The research-only tools can regenerate
 those inputs when separately supplied original ROMs and MAME are available.
 
 Validation covers every animation frame, player bitmap and raster program;
-interrupts during stream decoding; buffer isolation; all eight delivery labels
+interrupts during stream decoding; buffer isolation; comparison of the actual
+lossless Atari800 video with all prepared pixels and hardware overlays; all eight delivery labels
 at all four horizontal phases; music/effect continuity; the original bonus
 physics and scoring; and all 48 rooms. Emulator probes also check startup,
 fire-to-start, bonus DLI boundaries and return from Round Clear.

@@ -1,7 +1,9 @@
 # Round Clear portrait
 
-The normal-round result screen now draws an original large Flicky portrait at
-native Atari resolution. It does not rescale or reuse the small gameplay
+The normal-round result screen draws an original Flicky portrait at
+native Atari resolution, now reduced by 40% in both width and height. The
+paths are rasterized directly at 60% scale around the center of the screen;
+lettering keeps its original size. It does not rescale or reuse the small gameplay
 sprite. The eyes, crown feathers, raised wings, white bib, beak, toes and
 feather strokes are drawn separately in `tools/round_clear_art.py`.
 
@@ -11,7 +13,8 @@ below it. Seven prepared character sets occupy 7,168 bytes. ANTIC 4's fifth
 color is selected per character for gold details; small conflicting blue
 areas are assigned the neighboring blue shade during preparation.
 
-The four player masks provide a curved navy body shadow, cheek colors and
+The four player masks are repositioned for the smaller portrait and provide
+a curved navy body shadow, cheek colors and
 warm beak shading. Four missile masks provide feather, cheek and toe details.
 GTIA priority keeps the white and light-blue playfield in front of these
 overlays. Gold and blue pixels sit behind them. The background is black.
