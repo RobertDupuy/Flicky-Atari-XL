@@ -4,6 +4,15 @@ This implementation replaces the earlier simplified bonus. The reference is the 
 
 ## What the original does
 
+**Flicky can jump with the net.** This was confirmed by pressing Button 1 in
+the original `flicky` set in MAME, then tracing the player routine at `$3537`
+and controls at `$3816`. The earlier Atari bonus code omitted the vertical
+player update; it now calls the existing ROM-verified jump and pose routines.
+Fire starts a jump on a fresh press, holding fire does not repeat it, and
+releasing the stick in the air retains horizontal momentum. The net follows
+Flicky's vertical position and the original descending-bird catch rule remains.
+Landing uses the bottom opaque pixels of the source animation poses.
+
 Twenty chicks enter in five groups of four, alternating sides. The cats bounce on two seesaws below the catching platform. Each bird has its own fractional position, velocity, acceleration, launch state, flight clock and animation. The first four bonus rounds have different entrance spacing; later rounds change the horizontal flight program. Falling motion advances on alternate logic ticks. Birds that fall offscreen are missed without losing a life.
 
 The net catches descending birds. Original sprite silhouettes decide contact at the arcade's horizontal resolution, independently of the Atari picture. Later sprite slots hide earlier birds where their pixels overlap. Hardware collision bits remain latched until the original scan clears them; the first pending collision ends that tick's scan even if the selected bird is ascending or already gone. The new native implementation reproduces these rules, including right-edge clipping.
@@ -29,6 +38,15 @@ The 512-byte bonus raster program runs in `$1000–$11FF`, outside both SIC! car
 | `$0573–$068D` | Catch score and result lettering | Native BCD score and prepared result patches |
 
 ## Verification
+
+`tools/check_bonus_player.py` executes the source player and movement routines
+with floor contacts from the independent source sprite renderer. Its 943-state
+fixture covers standing jumps, held fire, release/repress and left/right moving
+jumps in the central playfield, comparing sixteen player/movement fields with
+zero mismatches. This establishes the tested trajectories, not every possible
+screen-edge interaction. The fixture is included for ROM-free regression tests.
+`tools/bonus_jump_probe.py` checks ordinary fire presses in both real-time
+Atari800 variants, including a long hold through landing and a second jump.
 
 `tools/check_arcade_bonus.py` executes the original bird routine and compares every native state field and animation selection. Sixteen round selections, covering every pattern and later reuse, produce **288,400 actor states with zero mismatches**. The resulting golden data is included so regression tests do not require the private ROMs.
 

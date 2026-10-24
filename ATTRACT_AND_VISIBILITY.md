@@ -25,13 +25,20 @@ than the arcade (about 30 seconds PAL and 34 seconds NTSC). The supplied video
 is an unretimed recording of the actual cartridge. Fire can start the game
 while the animation plays or after the settled logo.
 
-Scenery wall fills have been replaced with sparse dark patterns. Original tile
-collision masks and room geometry are unchanged. Stationary chicks are baked
-against the corrected backgrounds, and hardware players have priority over
+Decorative wall backgrounds are now plain black, except the retained artwork
+in rounds 20–22. This policy repeats with the 48-layout cycle. Only wall glyph
+pixels are removed; shared blue inks remain available to actors and decorative
+objects. Original tile collision masks, platforms and room geometry are
+unchanged. Stationary chicks are baked against the same background policy so
+their transparent areas cannot restore blue wall fragments. Hardware players have priority over
 all playfield colors so scenery cannot hide Flicky or the cats. All 48 numbered
 rounds were captured in both video standards through the ordinary round loader.
 The screenshot gallery uses diagnostic round selection, not played completion.
 Bonus rounds occur every fourth round, beginning with round 3.
+
+The new scenery regression checks every background cell in all 36 ordinary
+rounds, both display buffers, native messages and the three preserved layouts.
+The refreshed gallery waits for the round loader to finish before capturing.
 
 Delivery score actors now render native outlined digits. Original train awards
 are 100, 200, 300, 400, 500, 1000, 2000 and 5000 points. The original positions,

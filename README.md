@@ -1,6 +1,6 @@
 # Flicky — prepared-engine Atari XL build
 
-Current update: a richer intro palette, a subtle scanline-blended blue sky, and clearer motorcycle and biplane drawings within a 20% size increase. The full motorcycle, balloon, airplane, bomb and letter-unscrambling animation is retained. The Round Clear portrait remains 40% smaller. Watch the [PAL intro](Flicky-Atari-XL-PAL-Arcade-Intro.mp4), inspect the [PAL screenshot](Flicky-Arcade-Intro-PAL.png) and [NTSC screenshot](Flicky-Arcade-Intro-NTSC.png), or view [all 48 rounds in PAL and NTSC](Flicky-All-48-Rounds.html). See [ATTRACT_AND_VISIBILITY.md](ATTRACT_AND_VISIBILITY.md) for implementation and validation details.
+Current update: plain black decorative wall backgrounds except rounds **20–22**, plus restored **bonus-round jumping**, verified against the original MAME ROM. Actor colors, room geometry, the full intro animation and the smaller Round Clear portrait are retained. The [updated gallery covers all 48 rounds in PAL and NTSC](Flicky-All-48-Rounds.html). See [ARCADE_BONUS.md](ARCADE_BONUS.md) and [ATTRACT_AND_VISIBILITY.md](ATTRACT_AND_VISIBILITY.md) for implementation and validation details.
 
 A playable native 6502 game for a stock 64 KB Atari 800XL, supplied as a 512 KB SIC! cartridge. This build replaces the slow general sprite compositor with prepared character stamps, hardware sprites, compact sound events and terrain lookup tables.
 
@@ -8,7 +8,7 @@ A playable native 6502 game for a stock 64 KB Atari 800XL, supplied as a 512 KB 
 
 Download the **[NTSC cartridge](Flicky-Atari-XL-NTSC-512K.car)** or **[PAL cartridge](Flicky-Atari-XL-PAL-512K.car)**. Both are 512 KB SIC! cartridges. The [PAL bonus preview](Flicky-Atari-XL-PAL-Arcade-Bonus-Preview.mp4) shows the new bonus implementation with POKEY sound. Round 3 is selected before recording; subsequent play uses ordinary keys in real time.
 
-Load the cartridge matching your television standard as a SIC! 512 KB cartridge on an Atari XL emulator configured for 64 KB, with BASIC disabled. Use the PAL build on PAL and the NTSC build on NTSC. The clock still detects the hardware standard; the separate builds select the prop policy and presentation palettes. Press fire to start. Move left/right; fire jumps and throws a carried prop. Collect chicks, bring the following flock to an exit, and recover birds scattered by cats. Props are picked up automatically. Bonus rounds use the catching net. Fire restarts after game over.
+Load the cartridge matching your television standard as a SIC! 512 KB cartridge on an Atari XL emulator configured for 64 KB, with BASIC disabled. Use the PAL build on PAL and the NTSC build on NTSC. The clock still detects the hardware standard; the separate builds select the prop policy and presentation palettes. Press fire to start. Move left/right; fire jumps and throws a carried prop. Collect chicks, bring the following flock to an exit, and recover birds scattered by cats. Props are picked up automatically. During bonus rounds, **fire jumps with the net**; release and press again for another jump. Fire restarts after game over.
 
 The connected game includes 48 round layouts, six scenery accents, up to eight following chicks, two pursuing cats, six floor props, thrown-object combat, rescue scoring, time bonuses, extra lives, bonus catches, life restart, game over, a HUD and POKEY music/effects. Best score lasts until reset. Room messages use the source wording GATHER UP PIOPIO, DEFEAT NYANNYAN, and TAKE PIOPIO HOME. They are placed in non-solid cells clear of stationary chicks and floor props; collision maps are unchanged. Music keeps advancing under ordinary sound effects and resumes after temporary jingles; game over intentionally stops it.
 
@@ -46,7 +46,7 @@ Output: `build/native/flicky-native-dev.car` (each build replaces this developme
 Portable gameplay, geometry, rendering and native sound checks require a C compiler, pytest and NumPy:
 
 ```sh
-FLICKY_VARIANT=pal python3 -m pytest tests/test_prepared_engine.py tests/test_prepared_logic.py tests/test_compromise_game.py tests/test_stamp_background.py tests/test_native_sic.py tests/test_audio.py tests/test_presentation_audio.py tests/test_arcade_bonus.py tests/test_attract_delivery.py -q
+FLICKY_VARIANT=pal python3 -m pytest tests/test_prepared_engine.py tests/test_prepared_logic.py tests/test_compromise_game.py tests/test_stamp_background.py tests/test_native_sic.py tests/test_audio.py tests/test_presentation_audio.py tests/test_arcade_bonus.py tests/test_attract_delivery.py tests/test_bonus_jump_visibility.py -q
 ```
 
 Run the same command with `FLICKY_VARIANT=ntsc` to check the NTSC prop policy. The PAL-specific test verifies that picking up and throwing the sixth prop preserves the other five and that expiry removes only that prop.
