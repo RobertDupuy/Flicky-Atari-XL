@@ -1,6 +1,6 @@
 # Flicky — prepared-engine Atari XL build
 
-Current update: redrawn intro actors at the arcade's relative scale, blue mountains, a DLI-shaded blue sky, and a Round Clear portrait reduced by 40% in width and height. The full motorcycle, balloon, airplane, bomb and letter-unscrambling animation is retained. Watch the [PAL intro](Flicky-Atari-XL-PAL-Arcade-Intro.mp4), inspect the [intro screenshot](Flicky-Arcade-Intro-PAL.png) and [Round Clear screenshot](Flicky-Round-Clear-PAL.png), or view [all 48 rounds in PAL and NTSC](Flicky-All-48-Rounds.html). See [ATTRACT_AND_VISIBILITY.md](ATTRACT_AND_VISIBILITY.md) for implementation and validation details.
+Current update: a richer intro palette, a subtle scanline-blended blue sky, and clearer motorcycle and biplane drawings within a 20% size increase. The full motorcycle, balloon, airplane, bomb and letter-unscrambling animation is retained. The Round Clear portrait remains 40% smaller. Watch the [PAL intro](Flicky-Atari-XL-PAL-Arcade-Intro.mp4), inspect the [PAL screenshot](Flicky-Arcade-Intro-PAL.png) and [NTSC screenshot](Flicky-Arcade-Intro-NTSC.png), or view [all 48 rounds in PAL and NTSC](Flicky-All-48-Rounds.html). See [ATTRACT_AND_VISIBILITY.md](ATTRACT_AND_VISIBILITY.md) for implementation and validation details.
 
 A playable native 6502 game for a stock 64 KB Atari 800XL, supplied as a 512 KB SIC! cartridge. This build replaces the slow general sprite compositor with prepared character stamps, hardware sprites, compact sound events and terrain lookup tables.
 

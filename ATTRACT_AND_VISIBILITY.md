@@ -2,22 +2,26 @@
 
 The 512 KB PAL and NTSC cartridges replace the static title with the original
 arcade motorcycle, balloons, airplane, bombs and FLICKY letter unscrambling
-sequence. The approved native redraw uses a 12-by-20-pixel motorcycle/rider
-and a 17-by-21-pixel airplane/pilot, matching the arcade's relative screen
-scale. The motorcycle, jumping Flicky and chicks remain separate animated
+sequence. The approved native redraw uses a 14-by-24-pixel motorcycle/rider
+and a 20-by-25-pixel biplane/pilot, up from 12 by 20 and 17 by 21.
+Both width and height increases stay within the approved 20% limit. The motorcycle, jumping Flicky and chicks remain separate animated
 actors following the original positions. Research used the original uncoined MAME attract sequence; the Atari
 runs prepared native data and handwritten 6502 code, with no arcade emulator.
 
 The adaptation uses 160 by 224 color pixels, seven ANTIC character sets,
 separate display buffers, scenery palette changes and four hardware players
-multiplexed every eight scanlines. Five DLI sky shades run from dark blue at
-the top to light blue above the forest; the mountains are blue. Raster code
+multiplexed every eight scanlines. The sky uses two neighboring blue shades, blended across scanlines
+24–55, with a steady richer blue below. This replaces the broad, high-contrast
+blue bands. Rose balloons, deeper purple aircraft, stronger green foliage
+and blue mountains improve contrast using actual GTIA palette values; the
+emulator's color controls are unchanged. The sky DLI waits through the first
+character-line DMA and finishes before the next interrupt. Raster code
 writes only changing registers, and empty bands prepare player positions
 before they become visible. The display and player DMA share the same
 16-scanline origin, placing the entire 224-line intro inside the NTSC viewport.
 It contains 315 sampled poses. Decoding
 holds each completed picture until the next one is ready; playback is slower
-than the arcade (about 28 seconds PAL and 32 seconds NTSC). The supplied video
+than the arcade (about 30 seconds PAL and 34 seconds NTSC). The supplied video
 is an unretimed recording of the actual cartridge. Fire can start the game
 while the animation plays or after the settled logo.
 
