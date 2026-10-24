@@ -1,5 +1,7 @@
 # Flicky — prepared-engine Atari XL build
 
+Current update: corrected scenery contrast, the arcade attract animation, and visible delivery awards. Inspect [all 48 rounds in PAL and NTSC](Flicky-All-48-Rounds.html), download the [96 screenshots](Flicky-All-48-Rounds-Screenshots.zip), or watch the [PAL intro](Flicky-Atari-XL-PAL-Arcade-Intro.mp4) and [PAL level completion with delivery numbers](Flicky-Atari-XL-PAL-Level-Complete.mp4). See [ATTRACT_AND_VISIBILITY.md](ATTRACT_AND_VISIBILITY.md) for implementation and validation details.
+
 A playable native 6502 game for a stock 64 KB Atari 800XL, supplied as a 512 KB SIC! cartridge. This build replaces the slow general sprite compositor with prepared character stamps, hardware sprites, compact sound events and terrain lookup tables.
 
 ## Play
@@ -44,7 +46,7 @@ Output: `build/native/flicky-native-dev.car` (each build replaces this developme
 Portable gameplay, geometry, rendering and native sound checks require a C compiler, pytest and NumPy:
 
 ```sh
-FLICKY_VARIANT=pal python3 -m pytest tests/test_prepared_engine.py tests/test_prepared_logic.py tests/test_compromise_game.py tests/test_stamp_background.py tests/test_native_sic.py tests/test_audio.py tests/test_presentation_audio.py tests/test_arcade_bonus.py -q -k 'not False'
+FLICKY_VARIANT=pal python3 -m pytest tests/test_prepared_engine.py tests/test_prepared_logic.py tests/test_compromise_game.py tests/test_stamp_background.py tests/test_native_sic.py tests/test_audio.py tests/test_presentation_audio.py tests/test_arcade_bonus.py tests/test_attract_delivery.py -q
 ```
 
 Run the same command with `FLICKY_VARIANT=ntsc` to check the NTSC prop policy. The PAL-specific test verifies that picking up and throwing the sixth prop preserves the other five and that expiry removes only that prop.
